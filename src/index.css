@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@layer base {
+  /* VS Code Dark+ */
+  :root,
+  [data-theme="vscode-dark"] {
+    --bg-primary: #1e1e1e;
+    --bg-secondary: #252526;
+    --bg-tertiary: #333333;
+    --border-color: #3e3e42;
+    --text-primary: #d4d4d4;
+    --text-muted: #858585;
+    --accent-blue: #007acc;
+    --accent-orange: #ce9178;
+    --accent-green: #4ec9b0;
+    --accent-purple: #c586c0;
+    --badge-bg: #f59e0b;
+  }
+
+  /* VS Code Light+ */
+  [data-theme="vscode-light"] {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f3f3f3;
+    --bg-tertiary: #e8e8e8;
+    --border-color: #e1e1e1;
+    --text-primary: #000000;
+    --text-muted: #616161;
+    --accent-blue: #005fb8;
+    --accent-orange: #d97706;
+    --accent-green: #098658;
+    --accent-purple: #af00db;
+    --badge-bg: #d97706;
+  }
+
+  /* SynthWave '84 */
+  [data-theme="vscode-purple"] {
+    --bg-primary: #262335;
+    --bg-secondary: #241b2f;
+    --bg-tertiary: #1a1528;
+    --border-color: #36294a;
+    --text-primary: #fdfdfd;
+    --text-muted: #848bbd;
+    --accent-blue: #36f9f6;
+    --accent-orange: #ff7edb;
+    --accent-green: #72f1b8;
+    --accent-purple: #fe4450;
+    --badge-bg: #ff7edb;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    margin: 0;
+  }
+}
