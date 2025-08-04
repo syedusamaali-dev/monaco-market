@@ -1,34 +1,56 @@
 // src/App.jsx
+import { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { FlashSaleGrid } from './components/FlashSaleGrid';
+import { CartDrawer } from './components/CartDrawer';
 
 export default function App() {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([
+    {
+      id: 1,
+      title: 'Mechanical Keychron Keyboard K2',
+      price: 79.99,
+      originalPrice: 119.99,
+      quantity: 1,
+      image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=200&q=80'
+    }
+  ]);
+
+  const handleUpdateQuantity = (id, newQty) => {
+    if (newQty <= 0) {
+      handleRemoveItem(id);
+      return;
+    }
+    setCartItems(cartItems.map(item => item.id === id ? { ...item, quantity: newQty } : item));
+  };
+
+  const handleRemoveItem = (id) => {
+    setCartItems(cartItems.filter(item => item.id !== id));
+  };
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-200 flex flex-col justify-between">
       <div>
-        {/* Fixed / Sticky Header */}
-        <Navbar />
+        {/* Pass cart toggle & count to Navbar */}
+        <Navbar 
+          cartCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)} 
+          onOpenCart={() => setIsCartOpen(true)} 
+        />
 
-        {/* Main Content Area */}
         <main className="max-w-7xl mx-auto px-4 py-6 w-full">
           <FlashSaleGrid />
         </main>
       </div>
 
-      {/* VS Code Status Bar Style Footer */}
-      <footer className="border-t border-[var(--border-color)] bg-[var(--bg-secondary)] px-4 py-2 font-mono text-xs text-[var(--text-muted)] flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1 text-[var(--accent-green)]">
-            <span className="w-2 h-2 rounded-full bg-[var(--accent-green)] inline-block"></span> main*
-          </span>
-          <span>0 errors, 0 warnings</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <span>UTF-8</span>
-          <span className="hidden sm:inline">JavaScript React</span>
-          <span className="text-[var(--accent-blue)]">Monaco-Market v2.0</span>
-        </div>
-      </footer>
+      {/* Cart Drawer Component */}
+      <CartDrawer 
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cartItems}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
+      />
     </div>
   );
 }
