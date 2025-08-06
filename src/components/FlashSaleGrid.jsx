@@ -44,7 +44,7 @@ const PRODUCTS = [
   },
 ];
 
-export function FlashSaleGrid({ onAddToCart }) {
+export function FlashSaleGrid({ onAddToCart, searchQuery = '', selectedCategory = 'ALL' }) {
   const [timeLeft, setTimeLeft] = useState({ hours: 4, minutes: 18, seconds: 32 });
 
   useEffect(() => {
@@ -59,6 +59,19 @@ export function FlashSaleGrid({ onAddToCart }) {
     return () => clearInterval(timer);
   }, []);
 
+  // Live filtering logic
+  const filteredProducts = PRODUCTS.filter((product) => {
+    const matchesCategory =
+      selectedCategory === 'ALL' ||
+      product.category.toLowerCase() === selectedCategory.toLowerCase();
+
+    const matchesSearch =
+      product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.category.toLowerCase().includes(searchQuery.toLowerCase());
+
+    return matchesCategory && matchesSearch;
+  });
+
   return (
     <section className="space-y-6">
       {/* Flash Sale Banner Header */}
@@ -70,7 +83,7 @@ export function FlashSaleGrid({ onAddToCart }) {
               FLASH_DEALS // LIMITED_TIME
             </h2>
             <p className="text-xs text-[var(--text-muted)]">
-              Grab high-grade dev equipment before inventory depletes.
+              Showing {filteredProducts.length} of {PRODUCTS.length} equipment items
             </p>
           </div>
         </div>
@@ -92,80 +105,87 @@ export function FlashSaleGrid({ onAddToCart }) {
         </div>
       </div>
 
-      {/* Grid Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {PRODUCTS.map((product) => {
-          const discount = Math.round(
-            ((product.originalPrice - product.price) / product.originalPrice) * 100
-          );
-          const stockPercent = Math.round((product.stockLeft / product.totalStock) * 100);
+      {/* Grid or Empty State */}
+      {filteredProducts.length === 0 ? (
+        <div className="p-12 text-center bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg space-y-3 font-mono">
+          <span className="text-4xl opacity-50 block">🔍</span>
+          <h3 className="text-sm font-bold text-[var(--text-primary)]">
+            NO_MATCHING_ITEMS_FOUND
+          </h3>
+          <p className="text-xs text-[var(--text-muted)] max-w-sm mx-auto">
+            No products match query <span className="text-[var(--accent-orange)]">"{searchQuery}"</span> under category <span className="text-[var(--accent-blue)]">"{selectedCategory}"</span>.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {filteredProducts.map((product) => {
+            const discount = Math.round(
+              ((product.originalPrice - product.price) / product.originalPrice) * 100
+            );
+            const stockPercent = Math.round((product.stockLeft / product.totalStock) * 100);
 
-          return (
-            <div
-              key={product.id}
-              className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg overflow-hidden flex flex-col justify-between hover:border-[var(--accent-blue)] transition-colors group font-mono"
-            >
-              <div>
-                {/* Card Top / Image */}
-                <div className="relative aspect-video bg-[var(--bg-tertiary)] overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <span className="absolute top-2 left-2 bg-[var(--badge-bg)] text-black font-bold text-[10px] px-2 py-0.5 rounded uppercase tracking-wider">
-                    -{discount}% OFF
-                  </span>
-                </div>
-
-                {/* Card Content */}
-                <div className="p-4 space-y-3">
-                  <span className="text-[10px] text-[var(--accent-purple)] tracking-wide uppercase">
-                    // {product.category}
-                  </span>
-                  <h3 className="text-xs font-bold font-sans line-clamp-2 text-[var(--text-primary)]">
-                    {product.title}
-                  </h3>
-
-                  {/* Price */}
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-base font-bold text-[var(--accent-green)]">
-                      ${product.price.toFixed(2)}
-                    </span>
-                    <span className="text-xs text-[var(--text-muted)] line-through">
-                      ${product.originalPrice.toFixed(2)}
+            return (
+              <div
+                key={product.id}
+                className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg overflow-hidden flex flex-col justify-between hover:border-[var(--accent-blue)] transition-colors group font-mono"
+              >
+                <div>
+                  <div className="relative aspect-video bg-[var(--bg-tertiary)] overflow-hidden">
+                    <img
+                      src={product.image}
+                      alt={product.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <span className="absolute top-2 left-2 bg-[var(--badge-bg)] text-black font-bold text-[10px] px-2 py-0.5 rounded uppercase tracking-wider">
+                      -{discount}% OFF
                     </span>
                   </div>
 
-                  {/* Stock Bar */}
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-[10px] text-[var(--text-muted)]">
-                      <span>Stock status:</span>
-                      <span className="text-[var(--accent-orange)]">{product.stockLeft} left</span>
+                  <div className="p-4 space-y-3">
+                    <span className="text-[10px] text-[var(--accent-purple)] tracking-wide uppercase">
+                      // {product.category}
+                    </span>
+                    <h3 className="text-xs font-bold font-sans line-clamp-2 text-[var(--text-primary)]">
+                      {product.title}
+                    </h3>
+
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-base font-bold text-[var(--accent-green)]">
+                        ${product.price.toFixed(2)}
+                      </span>
+                      <span className="text-xs text-[var(--text-muted)] line-through">
+                        ${product.originalPrice.toFixed(2)}
+                      </span>
                     </div>
-                    <div className="w-full h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-[var(--accent-orange)]"
-                        style={{ width: `${stockPercent}%` }}
-                      />
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-[10px] text-[var(--text-muted)]">
+                        <span>Stock status:</span>
+                        <span className="text-[var(--accent-orange)]">{product.stockLeft} left</span>
+                      </div>
+                      <div className="w-full h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-[var(--accent-orange)]"
+                          style={{ width: `${stockPercent}%` }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Action Button */}
-              <div className="p-4 pt-0">
-                <button
-                  onClick={() => onAddToCart(product)}
-                  className="w-full py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--accent-blue)] hover:text-white border border-[var(--border-color)] hover:border-[var(--accent-blue)] text-[var(--text-primary)] text-xs font-bold rounded transition-all flex items-center justify-center gap-2"
-                >
-                  <span>+ Quick Add</span>
-                </button>
+                <div className="p-4 pt-0">
+                  <button
+                    onClick={() => onAddToCart(product)}
+                    className="w-full py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--accent-blue)] hover:text-white border border-[var(--border-color)] hover:border-[var(--accent-blue)] text-[var(--text-primary)] text-xs font-bold rounded transition-all flex items-center justify-center gap-2"
+                  >
+                    <span>+ Quick Add</span>
+                  </button>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </section>
   );
 }
