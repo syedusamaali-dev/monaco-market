@@ -1,18 +1,24 @@
-// src/App.jsx
 import { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { FlashSaleGrid } from './components/FlashSaleGrid';
 import { CartDrawer } from './components/CartDrawer';
+import { ProductInspectorModal } from './components/ProductInspectorModal';
+import { SpinWheelModal } from './components/SpinWheelModal';
 
 export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [selectedProductForInspect, setSelectedProductForInspect] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   
+  // Spin Wheel state
+  const [isWheelOpen, setIsWheelOpen] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
-      title: 'Keychron K2 Mechanical Keyboard',
+      title: 'Keychron K2 Wireless Mechanical Keyboard 75% Layout',
       price: 79.99,
       originalPrice: 119.99,
       quantity: 1,
@@ -46,18 +52,6 @@ export default function App() {
     setIsCartOpen(true);
   };
 
-  const handleUpdateQuantity = (id, newQty) => {
-    if (newQty <= 0) {
-      handleRemoveItem(id);
-      return;
-    }
-    setCartItems(cartItems.map((item) => (item.id === id ? { ...item, quantity: newQty } : item)));
-  };
-
-  const handleRemoveItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-  };
-
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-200 flex flex-col justify-between">
       <div>
@@ -70,9 +64,21 @@ export default function App() {
           onCategorySelect={setSelectedCategory}
         />
 
+        {/* Temu Lucky Wheel Callout Banner */}
+        <div className="bg-[var(--brand-primary)] text-white px-4 py-2.5 text-center text-xs font-black flex items-center justify-center gap-3 shadow-xs">
+          <span>🎁 SPIN THE LUCKY WHEEL & WIN UP TO 90% OFF!</span>
+          <button
+            onClick={() => setIsWheelOpen(true)}
+            className="bg-white text-[var(--brand-primary)] px-3 py-1 rounded-full text-[10px] font-black uppercase hover:bg-yellow-300 transition-colors cursor-pointer shadow-xs"
+          >
+            {appliedCoupon ? `COUPON: ${appliedCoupon.code}` : 'SPIN NOW'}
+          </button>
+        </div>
+
         <main className="max-w-7xl mx-auto px-4 py-6 w-full">
           <FlashSaleGrid
             onAddToCart={handleAddToCart}
+            onInspectProduct={(prod) => setSelectedProductForInspect(prod)}
             searchQuery={searchQuery}
             selectedCategory={selectedCategory}
           />
@@ -83,8 +89,27 @@ export default function App() {
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         cartItems={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
+        appliedCoupon={appliedCoupon}
+        onUpdateQuantity={(id, newQty) =>
+          setCartItems((prev) =>
+            newQty <= 0
+              ? prev.filter((i) => i.id !== id)
+              : prev.map((i) => (i.id === id ? { ...i, quantity: newQty } : i))
+          )
+        }
+        onRemoveItem={(id) => setCartItems((prev) => prev.filter((i) => i.id !== id))}
+      />
+
+      <ProductInspectorModal
+        product={selectedProductForInspect}
+        onClose={() => setSelectedProductForInspect(null)}
+        onAddToCart={handleAddToCart}
+      />
+
+      <SpinWheelModal
+        isOpen={isWheelOpen}
+        onClose={() => setIsWheelOpen(false)}
+        onApplyCoupon={(coupon) => setAppliedCoupon(coupon)}
       />
     </div>
   );

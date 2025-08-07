@@ -1,50 +1,53 @@
-// src/components/FlashSaleGrid.jsx
 import { useState, useEffect } from 'react';
 
 const PRODUCTS = [
   {
     id: 1,
-    title: 'Keychron K2 Mechanical Keyboard',
+    title: 'Keychron K2 Wireless Mechanical Keyboard 75% Layout',
     category: 'Keyboards',
     price: 79.99,
     originalPrice: 119.99,
     image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&q=80',
     stockLeft: 4,
     totalStock: 25,
+    salesCount: '1.4k bought in last 24h',
   },
   {
     id: 2,
-    title: 'Logitech MX Master 3S',
+    title: 'Logitech MX Master 3S Ergonomic Wireless Mouse',
     category: 'Mice',
     price: 89.99,
     originalPrice: 99.99,
     image: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500&q=80',
     stockLeft: 12,
     totalStock: 50,
+    salesCount: '3.8k bought recently',
   },
   {
     id: 3,
-    title: 'LG UltraGear 27" Gaming Monitor',
+    title: 'LG UltraGear 27" QHD Gaming Monitor 165Hz',
     category: 'Monitors',
     price: 249.99,
     originalPrice: 349.99,
     image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&q=80',
     stockLeft: 2,
     totalStock: 15,
+    salesCount: 'Almost sold out!',
   },
   {
     id: 4,
-    title: 'Sony WH-1000XM5 Headphones',
+    title: 'Sony WH-1000XM5 Wireless Noise Canceling Headphones',
     category: 'Audio',
     price: 298.00,
     originalPrice: 399.99,
     image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80',
     stockLeft: 8,
     totalStock: 30,
+    salesCount: '800+ sold today',
   },
 ];
 
-export function FlashSaleGrid({ onAddToCart, searchQuery = '', selectedCategory = 'ALL' }) {
+export function FlashSaleGrid({ onAddToCart, onInspectProduct, searchQuery = '', selectedCategory = 'ALL' }) {
   const [timeLeft, setTimeLeft] = useState({ hours: 4, minutes: 18, seconds: 32 });
 
   useEffect(() => {
@@ -59,7 +62,6 @@ export function FlashSaleGrid({ onAddToCart, searchQuery = '', selectedCategory 
     return () => clearInterval(timer);
   }, []);
 
-  // Live filtering logic
   const filteredProducts = PRODUCTS.filter((product) => {
     const matchesCategory =
       selectedCategory === 'ALL' ||
@@ -75,30 +77,30 @@ export function FlashSaleGrid({ onAddToCart, searchQuery = '', selectedCategory 
   return (
     <section className="space-y-6">
       {/* Flash Sale Banner Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg gap-4 font-mono">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl gap-4 shadow-xs">
         <div className="flex items-center gap-3">
-          <span className="text-xl">⚡</span>
+          <span className="text-2xl animate-pulse">⚡</span>
           <div>
-            <h2 className="text-sm font-bold tracking-wide uppercase text-[var(--text-primary)]">
-              FLASH_DEALS // LIMITED_TIME
+            <h2 className="text-sm font-black tracking-wide uppercase text-[var(--brand-secondary)] flex items-center gap-2">
+              LIGHTNING DEALS <span className="bg-red-100 text-red-600 text-[10px] font-bold px-2 py-0.5 rounded-full">UP TO 70% OFF</span>
             </h2>
             <p className="text-xs text-[var(--text-muted)]">
-              Showing {filteredProducts.length} of {PRODUCTS.length} equipment items
+              Showing {filteredProducts.length} limited-time offers
             </p>
           </div>
         </div>
 
         {/* Countdown Timer */}
-        <div className="flex items-center gap-2 text-xs">
-          <span className="text-[var(--text-muted)]">EXPIRES_IN:</span>
-          <div className="flex gap-1 font-bold text-[var(--accent-orange)]">
-            <span className="bg-[var(--bg-tertiary)] px-2 py-1 rounded border border-[var(--border-color)]">
+        <div className="flex items-center gap-2 text-xs font-semibold">
+          <span className="text-[var(--text-muted)]">ENDS IN:</span>
+          <div className="flex gap-1 font-bold text-white">
+            <span className="bg-[var(--brand-secondary)] px-2 py-1 rounded">
               {String(timeLeft.hours).padStart(2, '0')}h
             </span>
-            <span className="bg-[var(--bg-tertiary)] px-2 py-1 rounded border border-[var(--border-color)]">
+            <span className="bg-[var(--brand-secondary)] px-2 py-1 rounded">
               {String(timeLeft.minutes).padStart(2, '0')}m
             </span>
-            <span className="bg-[var(--bg-tertiary)] px-2 py-1 rounded border border-[var(--border-color)]">
+            <span className="bg-[var(--brand-secondary)] px-2 py-1 rounded">
               {String(timeLeft.seconds).padStart(2, '0')}s
             </span>
           </div>
@@ -107,13 +109,13 @@ export function FlashSaleGrid({ onAddToCart, searchQuery = '', selectedCategory 
 
       {/* Grid or Empty State */}
       {filteredProducts.length === 0 ? (
-        <div className="p-12 text-center bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg space-y-3 font-mono">
+        <div className="p-12 text-center bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl space-y-3">
           <span className="text-4xl opacity-50 block">🔍</span>
           <h3 className="text-sm font-bold text-[var(--text-primary)]">
-            NO_MATCHING_ITEMS_FOUND
+            NO MATCHING DEALS FOUND
           </h3>
           <p className="text-xs text-[var(--text-muted)] max-w-sm mx-auto">
-            No products match query <span className="text-[var(--accent-orange)]">"{searchQuery}"</span> under category <span className="text-[var(--accent-blue)]">"{selectedCategory}"</span>.
+            No items match query <span className="text-[var(--brand-primary)]">"{searchQuery}"</span> under category <span className="text-[var(--accent-blue)]">"{selectedCategory}"</span>.
           </p>
         </div>
       ) : (
@@ -127,30 +129,34 @@ export function FlashSaleGrid({ onAddToCart, searchQuery = '', selectedCategory 
             return (
               <div
                 key={product.id}
-                className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg overflow-hidden flex flex-col justify-between hover:border-[var(--accent-blue)] transition-colors group font-mono"
+                onClick={() => onInspectProduct(product)}
+                className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all group cursor-pointer"
               >
                 <div>
-                  <div className="relative aspect-video bg-[var(--bg-tertiary)] overflow-hidden">
+                  {/* Image Container */}
+                  <div className="relative aspect-square bg-[var(--bg-tertiary)] overflow-hidden">
                     <img
                       src={product.image}
                       alt={product.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    <span className="absolute top-2 left-2 bg-[var(--badge-bg)] text-black font-bold text-[10px] px-2 py-0.5 rounded uppercase tracking-wider">
-                      -{discount}% OFF
+                    <span className="absolute top-2 left-2 bg-[var(--brand-secondary)] text-white font-black text-[10px] px-2 py-0.5 rounded-md uppercase tracking-wider shadow-xs">
+                      -{discount}%
                     </span>
                   </div>
 
-                  <div className="p-4 space-y-3">
-                    <span className="text-[10px] text-[var(--accent-purple)] tracking-wide uppercase">
-                      // {product.category}
+                  {/* Details */}
+                  <div className="p-4 space-y-2">
+                    <span className="text-[10px] font-bold text-[var(--brand-primary)] tracking-wide uppercase">
+                      {product.salesCount}
                     </span>
-                    <h3 className="text-xs font-bold font-sans line-clamp-2 text-[var(--text-primary)]">
+                    <h3 className="text-xs font-bold line-clamp-2 text-[var(--text-primary)]">
                       {product.title}
                     </h3>
 
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-base font-bold text-[var(--accent-green)]">
+                    {/* Price Tag */}
+                    <div className="flex items-baseline gap-2 pt-1">
+                      <span className="text-lg font-black text-[var(--brand-secondary)]">
                         ${product.price.toFixed(2)}
                       </span>
                       <span className="text-xs text-[var(--text-muted)] line-through">
@@ -158,14 +164,15 @@ export function FlashSaleGrid({ onAddToCart, searchQuery = '', selectedCategory 
                       </span>
                     </div>
 
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-[10px] text-[var(--text-muted)]">
+                    {/* Stock Bar */}
+                    <div className="space-y-1 pt-1">
+                      <div className="flex justify-between text-[10px] text-[var(--text-muted)] font-semibold">
                         <span>Stock status:</span>
-                        <span className="text-[var(--accent-orange)]">{product.stockLeft} left</span>
+                        <span className="text-[var(--brand-primary)] font-bold">{product.stockLeft} left</span>
                       </div>
-                      <div className="w-full h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+                      <div className="w-full h-1.5 bg-[var(--bg-primary)] rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-[var(--accent-orange)]"
+                          className="h-full bg-[var(--brand-primary)]"
                           style={{ width: `${stockPercent}%` }}
                         />
                       </div>
@@ -173,10 +180,14 @@ export function FlashSaleGrid({ onAddToCart, searchQuery = '', selectedCategory 
                   </div>
                 </div>
 
+                {/* Quick Add Button */}
                 <div className="p-4 pt-0">
                   <button
-                    onClick={() => onAddToCart(product)}
-                    className="w-full py-2 bg-[var(--bg-tertiary)] hover:bg-[var(--accent-blue)] hover:text-white border border-[var(--border-color)] hover:border-[var(--accent-blue)] text-[var(--text-primary)] text-xs font-bold rounded transition-all flex items-center justify-center gap-2"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onAddToCart(product);
+                    }}
+                    className="w-full py-2 bg-[var(--brand-primary)] hover:opacity-90 text-white text-xs font-extrabold rounded-lg transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer"
                   >
                     <span>+ Quick Add</span>
                   </button>

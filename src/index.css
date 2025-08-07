@@ -1,55 +1,48 @@
 @import "tailwindcss";
 
-@layer base {
-  /* VS Code Dark+ */
-  :root,
-  [data-theme="vscode-dark"] {
-    --bg-primary: #1e1e1e;
-    --bg-secondary: #252526;
-    --bg-tertiary: #333333;
-    --border-color: #3e3e42;
-    --text-primary: #d4d4d4;
-    --text-muted: #858585;
-    --accent-blue: #007acc;
-    --accent-orange: #ce9178;
-    --accent-green: #4ec9b0;
-    --accent-purple: #c586c0;
-    --badge-bg: #f59e0b;
-  }
+/* 1. Default Temu Theme (Vibrant E-Commerce) */
+:root, [data-theme="temu"] {
+  --bg-primary: #f5f5f5;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #fff7ed;
+  --border-color: #e5e7eb;
+  
+  --text-primary: #111827;
+  --text-muted: #6b7280;
+  
+  --brand-primary: #fb641b; /* Vibrant Temu Orange */
+  --brand-secondary: #ff0000; /* Flash Red */
+  --accent-green: #16a34a;
+  --accent-blue: #2563eb;
+  --accent-purple: #9333ea;
+  
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --font-main: system-ui, -apple-system, sans-serif;
+}
 
-  /* VS Code Light+ */
-  [data-theme="vscode-light"] {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f3f3f3;
-    --bg-tertiary: #e8e8e8;
-    --border-color: #e1e1e1;
-    --text-primary: #000000;
-    --text-muted: #616161;
-    --accent-blue: #005fb8;
-    --accent-orange: #d97706;
-    --accent-green: #098658;
-    --accent-purple: #af00db;
-    --badge-bg: #d97706;
-  }
+/* 2. VS Code Theme (Dark / Editor Style) */
+[data-theme="vscode"] {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #252526;
+  --bg-tertiary: #2d2d2d;
+  --border-color: #3e3e42;
+  
+  --text-primary: #d4d4d4;
+  --text-muted: #858585;
+  
+  --brand-primary: #007acc; /* VS Code Blue */
+  --brand-secondary: #ce9178;
+  --accent-green: #4ec9b0;
+  --accent-blue: #569cd6;
+  --accent-purple: #c586c0;
+  
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --font-main: 'Consolas', 'Courier New', monospace;
+}
 
-  /* SynthWave '84 */
-  [data-theme="vscode-purple"] {
-    --bg-primary: #262335;
-    --bg-secondary: #241b2f;
-    --bg-tertiary: #1a1528;
-    --border-color: #36294a;
-    --text-primary: #fdfdfd;
-    --text-muted: #848bbd;
-    --accent-blue: #36f9f6;
-    --accent-orange: #ff7edb;
-    --accent-green: #72f1b8;
-    --accent-purple: #fe4450;
-    --badge-bg: #ff7edb;
-  }
-
-  body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    margin: 0;
-  }
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
