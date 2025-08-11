@@ -4,6 +4,7 @@ import { FlashSaleGrid } from './components/FlashSaleGrid';
 import { CartDrawer } from './components/CartDrawer';
 import { ProductInspectorModal } from './components/ProductInspectorModal';
 import { SpinWheelModal } from './components/SpinWheelModal';
+import { SocialProofToast } from './components/SocialProofToast';
 
 export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -111,6 +112,9 @@ export default function App() {
         onClose={() => setIsWheelOpen(false)}
         onApplyCoupon={(coupon) => setAppliedCoupon(coupon)}
       />
+
+      {/* Floating Live Social Proof Toasts */}
+      <SocialProofToast />
     </div>
   );
 }
