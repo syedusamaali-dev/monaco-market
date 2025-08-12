@@ -1,43 +1,103 @@
 @import "tailwindcss";
 
-/* 1. Default Temu Theme (Vibrant E-Commerce) */
-:root, [data-theme="temu"] {
-  --bg-primary: #f5f5f5;
+/* Default Fallback Light Theme */
+:root {
+  --bg-primary: #eff6ff;
   --bg-secondary: #ffffff;
-  --bg-tertiary: #fff7ed;
-  --border-color: #e5e7eb;
+  --bg-tertiary: #dbeafe;
+  --border-color: #bfdbfe;
   
-  --text-primary: #111827;
-  --text-muted: #6b7280;
+  --text-primary: #1e3a8a;
+  --text-muted: #1e40af;
   
-  --brand-primary: #fb641b; /* Vibrant Temu Orange */
-  --brand-secondary: #ff0000; /* Flash Red */
-  --accent-green: #16a34a;
-  --accent-blue: #2563eb;
-  --accent-purple: #9333ea;
+  --brand-primary: #2563eb;
+  --brand-secondary: #e11d48;
+  --accent-green: #059669;
+  --accent-blue: #3b82f6;
+  --accent-purple: #7c3aed;
   
-  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --card-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
   --font-main: system-ui, -apple-system, sans-serif;
 }
 
-/* 2. VS Code Theme (Dark / Editor Style) */
-[data-theme="vscode"] {
-  --bg-primary: #1e1e1e;
-  --bg-secondary: #252526;
-  --bg-tertiary: #2d2d2d;
-  --border-color: #3e3e42;
+/* 🟢 Palette 1: Emerald & Mint (Light) */
+html[data-theme="emerald"] {
+  --bg-primary: #f0fdf4 !important;
+  --bg-secondary: #ffffff !important;
+  --bg-tertiary: #dcfce7 !important;
+  --border-color: #bbf7d0 !important;
   
-  --text-primary: #d4d4d4;
-  --text-muted: #858585;
+  --text-primary: #064e3b !important;
+  --text-muted: #166534 !important;
   
-  --brand-primary: #007acc; /* VS Code Blue */
-  --brand-secondary: #ce9178;
-  --accent-green: #4ec9b0;
-  --accent-blue: #569cd6;
-  --accent-purple: #c586c0;
+  --brand-primary: #059669 !important;
+  --brand-secondary: #dc2626 !important;
+  --accent-green: #10b981 !important;
+  --accent-blue: #2563eb !important;
+  --accent-purple: #7c3aed !important;
   
-  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --font-main: 'Consolas', 'Courier New', monospace;
+  --card-shadow: 0 4px 12px rgba(5, 150, 105, 0.08) !important;
+  --font-main: system-ui, -apple-system, sans-serif !important;
+}
+
+/* 🔵 Palette 2: Sapphire Blue & Cobalt (Light) */
+html[data-theme="sapphire"] {
+  --bg-primary: #eff6ff !important;
+  --bg-secondary: #ffffff !important;
+  --bg-tertiary: #dbeafe !important;
+  --border-color: #bfdbfe !important;
+  
+  --text-primary: #1e3a8a !important;
+  --text-muted: #1e40af !important;
+  
+  --brand-primary: #2563eb !important;
+  --brand-secondary: #e11d48 !important;
+  --accent-green: #059669 !important;
+  --accent-blue: #3b82f6 !important;
+  --accent-purple: #7c3aed !important;
+  
+  --card-shadow: 0 4px 12px rgba(37, 99, 235, 0.08) !important;
+  --font-main: system-ui, -apple-system, sans-serif !important;
+}
+
+/* 🟣 Palette 3: Electric Violet (Light) */
+html[data-theme="violet"] {
+  --bg-primary: #f5f3ff !important;
+  --bg-secondary: #ffffff !important;
+  --bg-tertiary: #ede9fe !important;
+  --border-color: #ddd6fe !important;
+  
+  --text-primary: #4c1d95 !important;
+  --text-muted: #5b21b6 !important;
+  
+  --brand-primary: #7c3aed !important;
+  --brand-secondary: #f43f5e !important;
+  --accent-green: #059669 !important;
+  --accent-blue: #2563eb !important;
+  --accent-purple: #8b5cf6 !important;
+  
+  --card-shadow: 0 4px 12px rgba(124, 58, 237, 0.08) !important;
+  --font-main: system-ui, -apple-system, sans-serif !important;
+}
+
+/* 🌙 Palette 4: Dark Slate (Dark Mode) */
+html[data-theme="dark"] {
+  --bg-primary: #0f172a !important;
+  --bg-secondary: #1e293b !important;
+  --bg-tertiary: #334155 !important;
+  --border-color: #475569 !important;
+  
+  --text-primary: #f8fafc !important;
+  --text-muted: #94a3b8 !important;
+  
+  --brand-primary: #38bdf8 !important;
+  --brand-secondary: #f43f5e !important;
+  --accent-green: #4ade80 !important;
+  --accent-blue: #60a5fa !important;
+  --accent-purple: #c084fc !important;
+  
+  --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
+  --font-main: 'Consolas', 'Fira Code', 'Courier New', monospace !important;
 }
 
 body {
@@ -45,4 +105,5 @@ body {
   color: var(--text-primary);
   font-family: var(--font-main);
   transition: background-color 0.2s ease, color 0.2s ease;
+  margin: 0;
 }

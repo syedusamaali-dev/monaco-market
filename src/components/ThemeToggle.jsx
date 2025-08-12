@@ -1,42 +1,32 @@
-// src/components/ThemeToggle.jsx
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+
+const THEME_OPTIONS = [
+  { id: 'emerald', label: '🟢 Emerald & Mint (Light)' },
+  { id: 'sapphire', label: '🔵 Sapphire Blue (Light)' },
+  { id: 'violet', label: '🟣 Electric Violet (Light)' },
+  { id: 'dark', label: '🌙 Dark Slate (Dark)' },
+];
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('app-theme') || 'temu';
-  });
+  const [currentTheme, setCurrentTheme] = useState('sapphire');
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('app-theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'temu' ? 'vscode' : 'temu'));
-  };
+    document.documentElement.setAttribute('data-theme', currentTheme);
+  }, [currentTheme]);
 
   return (
-    <button
-      onClick={toggleTheme}
-      className="flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-full border transition-all cursor-pointer shadow-xs"
-      style={{
-        backgroundColor: 'var(--bg-secondary)',
-        borderColor: 'var(--border-color)',
-        color: 'var(--text-primary)',
-      }}
-      title="Switch Theme"
-    >
-      {theme === 'temu' ? (
-        <>
-          <span className="w-2.5 h-2.5 rounded-full bg-[#fb641b]"></span>
-          <span>Temu Mode</span>
-        </>
-      ) : (
-        <>
-          <span className="w-2.5 h-2.5 rounded-full bg-[#007acc]"></span>
-          <span>VS Code Theme</span>
-        </>
-      )}
-    </button>
+    <div className="relative inline-block">
+      <select
+        value={currentTheme}
+        onChange={(e) => setCurrentTheme(e.target.value)}
+        className="bg-[var(--bg-tertiary)] text-[var(--text-primary)] border border-[var(--border-color)] text-xs font-bold py-1.5 px-3 rounded-lg outline-none cursor-pointer transition-all hover:border-[var(--brand-primary)]"
+      >
+        {THEME_OPTIONS.map((theme) => (
+          <option key={theme.id} value={theme.id} className="bg-[var(--bg-secondary)] text-[var(--text-primary)]">
+            {theme.label}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }
