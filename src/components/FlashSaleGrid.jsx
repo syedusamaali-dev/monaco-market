@@ -45,6 +45,61 @@ const PRODUCTS = [
     totalStock: 30,
     salesCount: '800+ sold today',
   },
+  {
+    id: 5,
+    title: 'NuPhy Air75 V2 Ultra-Slim Wireless Mechanical Keyboard',
+    category: 'Keyboards',
+    price: 109.99,
+    originalPrice: 139.99,
+    image: 'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=500&q=80',
+    stockLeft: 6,
+    totalStock: 20,
+    salesCount: '2.1k bought in last 24h',
+  },
+  {
+    id: 6,
+    title: 'Razer DeathAdder V3 Pro Lightweight Wireless Mouse',
+    category: 'Mice',
+    price: 119.99,
+    originalPrice: 149.99,
+    image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&q=80',
+    stockLeft: 15,
+    totalStock: 40,
+    salesCount: '1.9k bought recently',
+  },
+  {
+    id: 7,
+    title: 'Dell UltraSharp 32" 4K USB-C Hub Monitor (U3223QE)',
+    category: 'Monitors',
+    price: 599.99,
+    originalPrice: 729.99,
+    image: 'https://images.unsplash.com/photo-1585792180666-f7347c490ee2?w=500&q=80',
+    stockLeft: 3,
+    totalStock: 10,
+    salesCount: '500+ sold this week',
+  },
+  {
+    id: 8,
+    title: 'Anker Magnetic Wireless Power Bank 10,000mAh',
+    category: 'Electronics',
+    price: 34.99,
+    originalPrice: 49.99,
+    image: 'https://images.unsplash.com/photo-1609592424109-dd9892f1b177?w=500&q=80',
+    stockLeft: 22,
+    totalStock: 60,
+    salesCount: '5.2k bought recently',
+  },
+  {
+    id: 9,
+    title: 'Apple MacBook Pro 14" M3 Chip Space Gray',
+    category: 'Electronics',
+    price: 1399.00,
+    originalPrice: 1599.00,
+    image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80',
+    stockLeft: 5,
+    totalStock: 18,
+    salesCount: 'Popular choice!',
+  },
 ];
 
 export function FlashSaleGrid({ onAddToCart, onInspectProduct, searchQuery = '', selectedCategory = 'ALL' }) {
@@ -63,20 +118,25 @@ export function FlashSaleGrid({ onAddToCart, onInspectProduct, searchQuery = '',
   }, []);
 
   const filteredProducts = PRODUCTS.filter((product) => {
+    const activeCategory = selectedCategory ? selectedCategory.trim().toLowerCase() : 'all';
+    
     const matchesCategory =
-      selectedCategory === 'ALL' ||
-      product.category.toLowerCase() === selectedCategory.toLowerCase();
+      activeCategory === 'all' ||
+      product.category.toLowerCase() === activeCategory;
+
+    const query = searchQuery ? searchQuery.trim().toLowerCase() : '';
 
     const matchesSearch =
-      product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchQuery.toLowerCase());
+      query === '' ||
+      product.title.toLowerCase().includes(query) ||
+      product.category.toLowerCase().includes(query);
 
     return matchesCategory && matchesSearch;
   });
 
   return (
     <section className="space-y-6">
-      {/* Flash Sale Banner Header */}
+      {/* Header Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl gap-4 shadow-xs">
         <div className="flex items-center gap-3">
           <span className="text-2xl animate-pulse">⚡</span>
@@ -85,7 +145,7 @@ export function FlashSaleGrid({ onAddToCart, onInspectProduct, searchQuery = '',
               LIGHTNING DEALS <span className="bg-red-100 text-red-600 text-[10px] font-bold px-2 py-0.5 rounded-full">UP TO 70% OFF</span>
             </h2>
             <p className="text-xs text-[var(--text-muted)]">
-              Showing {filteredProducts.length} limited-time offers
+              Showing {filteredProducts.length} of {PRODUCTS.length} total products
             </p>
           </div>
         </div>
@@ -107,7 +167,7 @@ export function FlashSaleGrid({ onAddToCart, onInspectProduct, searchQuery = '',
         </div>
       </div>
 
-      {/* Grid or Empty State */}
+      {/* Grid Display */}
       {filteredProducts.length === 0 ? (
         <div className="p-12 text-center bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl space-y-3">
           <span className="text-4xl opacity-50 block">🔍</span>
@@ -119,7 +179,7 @@ export function FlashSaleGrid({ onAddToCart, onInspectProduct, searchQuery = '',
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredProducts.map((product) => {
             const discount = Math.round(
               ((product.originalPrice - product.price) / product.originalPrice) * 100
@@ -133,7 +193,7 @@ export function FlashSaleGrid({ onAddToCart, onInspectProduct, searchQuery = '',
                 className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all group cursor-pointer"
               >
                 <div>
-                  {/* Image Container */}
+                  {/* Image */}
                   <div className="relative aspect-square bg-[var(--bg-tertiary)] overflow-hidden">
                     <img
                       src={product.image}
@@ -154,7 +214,7 @@ export function FlashSaleGrid({ onAddToCart, onInspectProduct, searchQuery = '',
                       {product.title}
                     </h3>
 
-                    {/* Price Tag */}
+                    {/* Price */}
                     <div className="flex items-baseline gap-2 pt-1">
                       <span className="text-lg font-black text-[var(--brand-secondary)]">
                         ${product.price.toFixed(2)}

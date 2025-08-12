@@ -1,6 +1,6 @@
 import { ThemeToggle } from './ThemeToggle';
 
-const CATEGORIES = ['ALL', 'Electronics', 'Keyboards', 'Mice', 'Monitors', 'Audio'];
+const CATEGORIES = ['ALL', 'Keyboards', 'Mice', 'Monitors', 'Audio', 'Electronics'];
 
 export function Navbar({ 
   cartCount, 
@@ -17,14 +17,20 @@ export function Navbar({
         
         {/* Temu Logo */}
         <div className="flex items-center gap-3 flex-shrink-0">
-          <a href="#" className="flex items-center gap-1.5 text-xl font-black tracking-tight">
+          <button 
+            onClick={() => {
+              onCategorySelect('ALL');
+              onSearchChange('');
+            }}
+            className="flex items-center gap-1.5 text-xl font-black tracking-tight text-left cursor-pointer"
+          >
             <span className="bg-[var(--brand-primary)] text-white px-2.5 py-1 rounded-md font-black tracking-widest text-base">
               TEMU
             </span>
             <span className="text-[var(--text-primary)] text-sm font-extrabold hidden sm:inline uppercase">
               MARKET
             </span>
-          </a>
+          </button>
         </div>
 
         {/* Live Search Input */}
@@ -42,7 +48,7 @@ export function Navbar({
           {searchQuery && (
             <button
               onClick={() => onSearchChange('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-primary)] text-xs"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-primary)] text-xs cursor-pointer"
             >
               ✕
             </button>
@@ -55,7 +61,7 @@ export function Navbar({
 
           <button
             onClick={onOpenCart}
-            className="relative p-2 rounded-full hover:bg-[var(--bg-tertiary)] transition-colors flex items-center justify-center"
+            className="relative p-2 rounded-full hover:bg-[var(--bg-tertiary)] transition-colors flex items-center justify-center cursor-pointer"
             aria-label="View Cart"
           >
             <span className="text-2xl">🛒</span>
@@ -73,12 +79,12 @@ export function Navbar({
         <div className="max-w-7xl mx-auto flex items-center gap-2 text-xs">
           <span className="text-[var(--text-muted)] font-semibold mr-1">Categories:</span>
           {CATEGORIES.map((cat) => {
-            const isActive = selectedCategory === cat;
+            const isActive = selectedCategory.toUpperCase() === cat.toUpperCase();
             return (
               <button
                 key={cat}
                 onClick={() => onCategorySelect(cat)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
+                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${
                   isActive
                     ? 'bg-[var(--brand-primary)] text-white shadow-xs'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]'
