@@ -1,123 +1,101 @@
-import { useState } from 'react';
-
 export function ProductInspectorModal({ product, onClose, onAddToCart }) {
-  const [activeTab, setActiveTab] = useState('preview');
-
   if (!product) return null;
 
-  const jsonCode = JSON.stringify(
-    {
-      id: product.id,
-      name: product.title,
-      category: product.category,
-      price: product.price,
-      originalPrice: product.originalPrice,
-      stockLeft: product.stockLeft,
-      salesCount: product.salesCount,
-    },
-    null,
-    2
-  );
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div
-        className="fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity"
-        onClick={onClose}
-      />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+      <div 
+        className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-2xl max-w-lg w-full p-6 shadow-2xl relative animate-in fade-in zoom-in duration-200"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-[var(--text-muted)] hover:text-[var(--text-primary)] text-lg font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-[var(--bg-tertiary)] transition-colors cursor-pointer"
+        >
+          ✕
+        </button>
 
-      <div className="relative z-10 w-full max-w-2xl bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-        
-        {/* Header */}
-        <div className="bg-[var(--bg-tertiary)] border-b border-[var(--border-color)] px-4 py-2.5 flex items-center justify-between text-xs font-bold">
-          <span>ITEM DETAILS</span>
-          <button
-            onClick={onClose}
-            className="hover:bg-[var(--border-color)] text-[var(--text-muted)] hover:text-[var(--text-primary)] rounded-full px-2 py-0.5 text-xs font-extrabold"
-          >
-            ✕
-          </button>
+        {/* Modal Header */}
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-2xl">🔍</span>
+          <div>
+            <h3 className="text-lg font-black text-[var(--text-primary)] leading-tight">
+              Product Inspector
+            </h3>
+            <p className="text-xs text-[var(--text-muted)] font-medium">
+              Detailed specifications & inventory details
+            </p>
+          </div>
         </div>
 
-        {/* Tabs */}
-        <div className="bg-[var(--bg-primary)] border-b border-[var(--border-color)] flex items-center px-2 text-xs font-bold">
-          <button
-            onClick={() => setActiveTab('preview')}
-            className={`px-4 py-2 border-b-2 ${
-              activeTab === 'preview'
-                ? 'border-[var(--brand-primary)] text-[var(--brand-primary)]'
-                : 'border-transparent text-[var(--text-muted)]'
-            }`}
-          >
-            Product Preview
-          </button>
-          <button
-            onClick={() => setActiveTab('json')}
-            className={`px-4 py-2 border-b-2 ${
-              activeTab === 'json'
-                ? 'border-[var(--brand-primary)] text-[var(--brand-primary)]'
-                : 'border-transparent text-[var(--text-muted)]'
-            }`}
-          >
-            JSON Spec
-          </button>
-        </div>
-
-        {/* Content Body */}
-        <div className="p-4 overflow-y-auto flex-1">
-          {activeTab === 'preview' ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="relative aspect-square rounded-lg overflow-hidden border border-[var(--border-color)] bg-[var(--bg-tertiary)]">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <span className="text-xs font-bold text-[var(--brand-primary)] uppercase">
-                    {product.salesCount}
-                  </span>
-                  <h2 className="text-base font-extrabold text-[var(--text-primary)] mt-1">
-                    {product.title}
-                  </h2>
-                </div>
-
-                <div className="flex items-baseline gap-3">
-                  <span className="text-2xl font-black text-[var(--brand-secondary)]">
-                    ${product.price.toFixed(2)}
-                  </span>
-                  <span className="text-sm text-[var(--text-muted)] line-through">
-                    ${product.originalPrice.toFixed(2)}
-                  </span>
-                </div>
-
-                <div className="p-3 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-lg text-xs space-y-2 font-semibold">
-                  <div className="flex justify-between">
-                    <span className="text-[var(--text-muted)]">Stock:</span>
-                    <span className="text-[var(--brand-primary)]">{product.stockLeft} left</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[var(--text-muted)]">Shipping:</span>
-                    <span className="text-[var(--accent-green)]">Fast Express</span>
-                  </div>
-                </div>
-              </div>
+        {/* Product Details Section */}
+        <div className="flex gap-4 items-center bg-[var(--bg-tertiary)] p-3 rounded-xl border border-[var(--border-color)] mb-4">
+          <img
+            src={product.image}
+            alt={product.title}
+            className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+          />
+          <div className="flex-1 min-w-0">
+            <h4 className="text-xs font-bold text-[var(--text-primary)] truncate">
+              {product.title}
+            </h4>
+            <div className="flex items-center gap-2 mt-1">
+              <span className="text-sm font-black text-[var(--brand-primary)]">
+                ${product.price}
+              </span>
+              {product.originalPrice && (
+                <span className="text-xs text-[var(--text-muted)] line-through">
+                  ${product.originalPrice}
+                </span>
+              )}
             </div>
-          ) : (
-            <pre className="bg-[var(--bg-primary)] p-4 rounded-lg border border-[var(--border-color)] text-xs font-mono leading-relaxed overflow-x-auto text-[var(--text-primary)]">
-              <code>{jsonCode}</code>
-            </pre>
-          )}
+          </div>
         </div>
 
-        {/* Footer */}
-        <div className="bg-[var(--bg-tertiary)] border-t border-[var(--border-color)] p-4 flex items-center justify-end gap-3">
+        {/* Formatted Specification Grid */}
+        <div className="grid grid-cols-2 gap-2 text-xs mb-6">
+          <div className="bg-[var(--bg-primary)] p-3 rounded-lg border border-[var(--border-color)]">
+            <span className="text-[var(--text-muted)] block text-[10px] uppercase font-bold tracking-wider">
+              Category
+            </span>
+            <span className="font-bold text-[var(--text-primary)]">
+              {product.category || 'Electronics'}
+            </span>
+          </div>
+
+          <div className="bg-[var(--bg-primary)] p-3 rounded-lg border border-[var(--border-color)]">
+            <span className="text-[var(--text-muted)] block text-[10px] uppercase font-bold tracking-wider">
+              Stock Status
+            </span>
+            <span className="font-bold text-[var(--accent-green)]">
+              In Stock ({product.stock || 12} units)
+            </span>
+          </div>
+
+          <div className="bg-[var(--bg-primary)] p-3 rounded-lg border border-[var(--border-color)]">
+            <span className="text-[var(--text-muted)] block text-[10px] uppercase font-bold tracking-wider">
+              Rating
+            </span>
+            <span className="font-bold text-[var(--text-primary)]">
+              ⭐ {product.rating || '4.8'} / 5.0
+            </span>
+          </div>
+
+          <div className="bg-[var(--bg-primary)] p-3 rounded-lg border border-[var(--border-color)]">
+            <span className="text-[var(--text-muted)] block text-[10px] uppercase font-bold tracking-wider">
+              Shipping
+            </span>
+            <span className="font-bold text-[var(--brand-primary)]">
+              Free Express
+            </span>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-[var(--bg-primary)] border border-[var(--border-color)] text-[var(--text-primary)] rounded-lg text-xs font-bold"
+            className="flex-1 py-2.5 rounded-xl border border-[var(--border-color)] text-xs font-bold text-[var(--text-muted)] hover:bg-[var(--bg-tertiary)] transition-colors cursor-pointer"
           >
             Close
           </button>
@@ -126,12 +104,11 @@ export function ProductInspectorModal({ product, onClose, onAddToCart }) {
               onAddToCart(product);
               onClose();
             }}
-            className="px-5 py-2 bg-[var(--brand-primary)] text-white font-extrabold rounded-lg text-xs tracking-wider uppercase shadow-xs cursor-pointer"
+            className="flex-1 py-2.5 rounded-xl bg-[var(--brand-primary)] text-white text-xs font-bold hover:opacity-90 transition-opacity cursor-pointer shadow-xs"
           >
-            Add To Cart (${product.price.toFixed(2)})
+            Add to Cart
           </button>
         </div>
-
       </div>
     </div>
   );
