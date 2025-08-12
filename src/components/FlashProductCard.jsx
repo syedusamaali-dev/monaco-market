@@ -41,7 +41,7 @@ export const FlashProductCard = ({ product }) => {
             </span>
           </div>
 
-          {/* Temu Claim Meter */}
+          {/* Monaco Claim Meter */}
           <div className="flex flex-col gap-1 mt-1">
             <div className="w-full bg-[var(--bg-primary)] h-1.5 rounded-full overflow-hidden border border-[var(--border-color)]">
               <div

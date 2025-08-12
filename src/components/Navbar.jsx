@@ -15,7 +15,7 @@ export function Navbar({
       {/* Top Header Row */}
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
         
-        {/* Temu Logo */}
+        {/* Monaco Logo */}
         <div className="flex items-center gap-3 flex-shrink-0">
           <button 
             onClick={() => {
@@ -25,10 +25,10 @@ export function Navbar({
             className="flex items-center gap-1.5 text-xl font-black tracking-tight text-left cursor-pointer"
           >
             <span className="bg-[var(--brand-primary)] text-white px-2.5 py-1 rounded-md font-black tracking-widest text-base">
-              TEMU
+              Monaco
             </span>
             <span className="text-[var(--text-primary)] text-sm font-extrabold hidden sm:inline uppercase">
-              MARKET
+              Market
             </span>
           </button>
         </div>

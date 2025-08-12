@@ -65,7 +65,7 @@ export default function App() {
           onCategorySelect={setSelectedCategory}
         />
 
-        {/* Temu Lucky Wheel Callout Banner */}
+        {/* Monaco Lucky Wheel Callout Banner */}
         <div className="bg-[var(--brand-primary)] text-white px-4 py-2.5 text-center text-xs font-black flex items-center justify-center gap-3 shadow-xs">
           <span>🎁 SPIN THE LUCKY WHEEL & WIN UP TO 90% OFF!</span>
           <button
