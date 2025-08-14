@@ -5,8 +5,12 @@ import { CartDrawer } from './components/CartDrawer';
 import { ProductInspectorModal } from './components/ProductInspectorModal';
 import { SpinWheelModal } from './components/SpinWheelModal';
 import { SocialProofToast } from './components/SocialProofToast';
+import { CheckoutPage } from './components/CheckoutPage';
 
 export default function App() {
+  // Page Navigation State
+  const [currentPage, setCurrentPage] = useState('dashboard'); // 'dashboard' | 'checkout'
+
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProductForInspect, setSelectedProductForInspect] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -53,6 +57,19 @@ export default function App() {
     setIsCartOpen(true);
   };
 
+  // 🔴 Conditionally render Checkout Page if active
+  if (currentPage === 'checkout') {
+    return (
+      <CheckoutPage
+        cartItems={cartItems}
+        appliedCoupon={appliedCoupon}
+        onClearCart={() => setCartItems([])}
+        onNavigate={(page) => setCurrentPage(page)}
+      />
+    );
+  }
+
+  // 🟢 Render Store Dashboard
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-200 flex flex-col justify-between">
       <div>
@@ -86,11 +103,16 @@ export default function App() {
         </main>
       </div>
 
+      {/* Cart Drawer with Checkout Navigation Trigger */}
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         cartItems={cartItems}
         appliedCoupon={appliedCoupon}
+        onOpenCheckout={() => {
+          setIsCartOpen(false);
+          setCurrentPage('checkout');
+        }}
         onUpdateQuantity={(id, newQty) =>
           setCartItems((prev) =>
             newQty <= 0
