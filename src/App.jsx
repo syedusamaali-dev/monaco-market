@@ -6,10 +6,14 @@ import { ProductInspectorModal } from './components/ProductInspectorModal';
 import { SpinWheelModal } from './components/SpinWheelModal';
 import { SocialProofToast } from './components/SocialProofToast';
 import { CheckoutPage } from './components/CheckoutPage';
+import { AuthPage } from './components/AuthPage'; // 👈 1. Import AuthPage
 
 export default function App() {
   // Page Navigation State
-  const [currentPage, setCurrentPage] = useState('dashboard'); // 'dashboard' | 'checkout'
+  const [currentPage, setCurrentPage] = useState('auth'); // 'dashboard' | 'checkout' | 'auth'
+  
+  // 👈 2. Add User State here
+  const [currentUser, setCurrentUser] = useState(null);
 
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProductForInspect, setSelectedProductForInspect] = useState(null);
@@ -69,6 +73,16 @@ export default function App() {
     );
   }
 
+  // 👈 3. Conditionally render Auth Page right here
+  if (currentPage === 'auth') {
+    return (
+      <AuthPage
+        onNavigate={(page) => setCurrentPage(page)}
+        onLoginSuccess={(user) => setCurrentUser(user)}
+      />
+    );
+  }
+
   // 🟢 Render Store Dashboard
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-200 flex flex-col justify-between">
@@ -80,6 +94,8 @@ export default function App() {
           onSearchChange={setSearchQuery}
           selectedCategory={selectedCategory}
           onCategorySelect={setSelectedCategory}
+          currentUser={currentUser} // 👈 Pass user state to Navbar
+          onOpenAuth={() => setCurrentPage('auth')} // 👈 Open Auth Page from Navbar
         />
 
         {/* Monaco Lucky Wheel Callout Banner */}
@@ -103,7 +119,6 @@ export default function App() {
         </main>
       </div>
 
-      {/* Cart Drawer with Checkout Navigation Trigger */}
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
@@ -135,7 +150,6 @@ export default function App() {
         onApplyCoupon={(coupon) => setAppliedCoupon(coupon)}
       />
 
-      {/* Floating Live Social Proof Toasts */}
       <SocialProofToast />
     </div>
   );
