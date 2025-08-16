@@ -9,7 +9,7 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
   // Form State
   const [formData, setFormData] = useState({
     fullName: '',
-    identifier: '', // Email or Phone number
+    identifier: '',
     password: '',
     rememberMe: false,
     agreeTerms: false,
@@ -27,12 +27,11 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
   };
 
   const handleOtpChange = (index, value) => {
-    if (value.length > 1) value = value[0]; // Only single digit
+    if (value.length > 1) value = value[0];
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
 
-    // Auto-focus next input
     if (value && index < 5) {
       const nextInput = document.getElementById(`otp-input-${index + 1}`);
       if (nextInput) nextInput.focus();
@@ -43,7 +42,6 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // If using phone number, transition to OTP verification
     if (authMethod === 'phone' && mode !== 'otp') {
       setTimeout(() => {
         setIsSubmitting(false);
@@ -52,7 +50,6 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
       return;
     }
 
-    // Simulate Auth API Request
     setTimeout(() => {
       setIsSubmitting(false);
       const user = {
@@ -66,7 +63,6 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
 
   const handleGoogleSignIn = () => {
     setIsSubmitting(true);
-    // Simulate OAuth Login
     setTimeout(() => {
       setIsSubmitting(false);
       if (onLoginSuccess) {
@@ -77,24 +73,24 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
-      {/* Top Navigation Bar */}
-      <header className="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-[#191919] text-[#ffffff] flex flex-col justify-between selection:bg-[#f05a67] selection:text-white">
+      {/* Top Header */}
+      <header className="bg-[#191919]/90 backdrop-blur-md border-b border-[#2f2f2f] sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <button
             onClick={() => onNavigate('dashboard')}
-            className="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-indigo-400 transition-colors cursor-pointer"
+            className="flex items-center gap-2 text-xs font-semibold text-[#999999] hover:text-[#f05a67] transition-colors cursor-pointer"
           >
-            ← Back to Store
+            ← Return to Store
           </button>
 
-          <div className="text-xs font-bold text-slate-400">
+          <div className="text-xs font-medium text-[#999999]">
             {mode === 'login' ? (
               <span>
                 Don't have an account?{' '}
                 <button
                   onClick={() => setMode('register')}
-                  className="text-indigo-400 hover:underline font-bold cursor-pointer ml-1"
+                  className="text-[#f05a67] hover:underline font-bold cursor-pointer ml-1"
                 >
                   Sign Up
                 </button>
@@ -104,7 +100,7 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
                 Already have an account?{' '}
                 <button
                   onClick={() => setMode('login')}
-                  className="text-indigo-400 hover:underline font-bold cursor-pointer ml-1"
+                  className="text-[#f05a67] hover:underline font-bold cursor-pointer ml-1"
                 >
                   Sign In
                 </button>
@@ -116,32 +112,44 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
 
       {/* Main Container */}
       <main className="max-w-md w-full mx-auto px-4 py-12 flex-1 flex flex-col justify-center">
-        <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-8 shadow-2xl backdrop-blur-md space-y-6">
+        <div className="bg-[#222222] border border-[#2f2f2f] rounded-3xl p-8 shadow-2xl space-y-6">
           
           {/* Header Title */}
           <div className="text-center space-y-2">
-            <h1 className="text-2xl font-black tracking-tight text-white">
-              {mode === 'login' && 'Welcome Back'}
-              {mode === 'register' && 'Create Your Account'}
-              {mode === 'otp' && 'Verify Phone Number'}
+            <h1 className="text-3xl font-extrabold tracking-tight text-white">
+              {mode === 'login' && (
+                <span>
+                  Welcome <span className="text-[#f05a67]">Back</span>
+                </span>
+              )}
+              {mode === 'register' && (
+                <span>
+                  Create <span className="text-[#f05a67]">Account</span>
+                </span>
+              )}
+              {mode === 'otp' && (
+                <span>
+                  Verify <span className="text-[#f05a67]">Phone</span>
+                </span>
+              )}
             </h1>
-            <p className="text-xs text-slate-400">
-              {mode === 'login' && 'Sign in to access your orders and saved items'}
-              {mode === 'register' && 'Join thousands of shoppers for exclusive deals'}
+            <p className="text-xs text-[#999999]">
+              {mode === 'login' && 'Sign in to access your dashboard and active orders'}
+              {mode === 'register' && 'Join for an exclusive shopping experience'}
               {mode === 'otp' && `Enter the 6-digit code sent to ${formData.identifier}`}
             </p>
           </div>
 
-          {/* Mode Switcher Tabs (Email vs Phone) */}
+          {/* Email vs Phone Tab Selector */}
           {mode !== 'otp' && (
-            <div className="grid grid-cols-2 gap-1 p-1 bg-slate-950 rounded-xl border border-slate-800 text-xs font-bold">
+            <div className="grid grid-cols-2 gap-1 p-1 bg-[#191919] rounded-xl border border-[#2f2f2f] text-xs font-bold">
               <button
                 type="button"
                 onClick={() => setAuthMethod('email')}
                 className={`py-2 rounded-lg transition-all cursor-pointer ${
                   authMethod === 'email'
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-[#f05a67] text-white shadow-md'
+                    : 'text-[#999999] hover:text-white'
                 }`}
               >
                 📧 Email
@@ -151,8 +159,8 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
                 onClick={() => setAuthMethod('phone')}
                 className={`py-2 rounded-lg transition-all cursor-pointer ${
                   authMethod === 'phone'
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-[#f05a67] text-white shadow-md'
+                    : 'text-[#999999] hover:text-white'
                 }`}
               >
                 📱 Mobile Phone
@@ -160,7 +168,7 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
             </div>
           )}
 
-          {/* OTP Input Form */}
+          {/* Form Content */}
           {mode === 'otp' ? (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="flex justify-between gap-2">
@@ -173,7 +181,7 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
                     maxLength={1}
                     value={digit}
                     onChange={(e) => handleOtpChange(idx, e.target.value)}
-                    className="w-11 h-12 text-center text-lg font-bold bg-slate-950 border border-slate-800 rounded-xl outline-none focus:border-indigo-500 text-white"
+                    className="w-11 h-12 text-center text-lg font-bold bg-[#191919] border border-[#2f2f2f] rounded-xl outline-none focus:border-[#f05a67] text-white"
                   />
                 ))}
               </div>
@@ -181,30 +189,27 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
               <button
                 type="submit"
                 disabled={isSubmitting || otp.join('').length < 6}
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-400 hover:to-indigo-500 text-white text-xs font-black uppercase tracking-wider transition-all disabled:opacity-50 cursor-pointer shadow-lg shadow-indigo-500/25 flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl bg-[#f05a67] hover:bg-[#d94754] text-white text-xs font-black uppercase tracking-wider transition-all disabled:opacity-50 cursor-pointer shadow-lg shadow-[#f05a67]/20 flex items-center justify-center gap-2"
               >
                 {isSubmitting ? 'Verifying Code...' : 'Verify & Continue'}
               </button>
 
-              <div className="text-center text-xs text-slate-500">
+              <div className="text-center text-xs text-[#999999]">
                 Didn't receive a code?{' '}
                 <button
                   type="button"
                   onClick={() => setOtp(['', '', '', '', '', ''])}
-                  className="text-indigo-400 font-bold hover:underline cursor-pointer"
+                  className="text-[#f05a67] font-bold hover:underline cursor-pointer"
                 >
                   Resend OTP
                 </button>
               </div>
             </form>
           ) : (
-            /* Main Login / Register Form */
             <form onSubmit={handleSubmit} className="space-y-4">
-              
-              {/* Full Name (Register Only) */}
               {mode === 'register' && (
                 <div>
-                  <label className="block text-xs text-slate-300 font-bold mb-1.5">
+                  <label className="block text-xs text-[#999999] font-bold mb-1.5">
                     Full Name
                   </label>
                   <input
@@ -214,14 +219,13 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
                     value={formData.fullName}
                     onChange={handleChange}
                     placeholder="Alex Morgan"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 outline-none focus:border-indigo-500 transition-colors text-xs text-white placeholder-slate-600"
+                    className="w-full bg-[#191919] border border-[#2f2f2f] rounded-xl p-3 outline-none focus:border-[#f05a67] transition-colors text-xs text-white placeholder-[#666666]"
                   />
                 </div>
               )}
 
-              {/* Email or Phone Input */}
               <div>
-                <label className="block text-xs text-slate-300 font-bold mb-1.5">
+                <label className="block text-xs text-[#999999] font-bold mb-1.5">
                   {authMethod === 'email' ? 'Email Address' : 'Phone Number'}
                 </label>
                 <input
@@ -233,21 +237,20 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
                   placeholder={
                     authMethod === 'email' ? 'alex@example.com' : '+1 (555) 000-0000'
                   }
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 outline-none focus:border-indigo-500 transition-colors text-xs text-white placeholder-slate-600"
+                  className="w-full bg-[#191919] border border-[#2f2f2f] rounded-xl p-3 outline-none focus:border-[#f05a67] transition-colors text-xs text-white placeholder-[#666666]"
                 />
               </div>
 
-              {/* Password Field (Skipped for Phone OTP) */}
               {authMethod === 'email' && (
                 <div>
                   <div className="flex justify-between items-center mb-1.5">
-                    <label className="block text-xs text-slate-300 font-bold">
+                    <label className="block text-xs text-[#999999] font-bold">
                       Password
                     </label>
                     {mode === 'login' && (
                       <button
                         type="button"
-                        className="text-[10px] text-indigo-400 hover:underline cursor-pointer font-semibold"
+                        className="text-[10px] text-[#f05a67] hover:underline cursor-pointer font-semibold"
                       >
                         Forgot Password?
                       </button>
@@ -261,12 +264,12 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
                       value={formData.password}
                       onChange={handleChange}
                       placeholder="••••••••"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 pr-10 outline-none focus:border-indigo-500 transition-colors text-xs text-white"
+                      className="w-full bg-[#191919] border border-[#2f2f2f] rounded-xl p-3 pr-10 outline-none focus:border-[#f05a67] transition-colors text-xs text-white"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-slate-500 hover:text-slate-300 text-xs cursor-pointer"
+                      className="absolute right-3 top-3 text-[#666666] hover:text-[#999999] text-xs cursor-pointer"
                     >
                       {showPassword ? '🙈' : '👁️'}
                     </button>
@@ -274,7 +277,7 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
                 </div>
               )}
 
-              {/* Checkbox Controls */}
+              {/* Controls */}
               {mode === 'login' ? (
                 <div className="flex items-center gap-2 pt-1">
                   <input
@@ -283,9 +286,9 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
                     name="rememberMe"
                     checked={formData.rememberMe}
                     onChange={handleChange}
-                    className="rounded bg-slate-950 border-slate-800 text-indigo-600 focus:ring-indigo-500"
+                    className="rounded bg-[#191919] border-[#2f2f2f] text-[#f05a67] focus:ring-[#f05a67]"
                   />
-                  <label htmlFor="rememberMe" className="text-xs text-slate-400 cursor-pointer">
+                  <label htmlFor="rememberMe" className="text-xs text-[#999999] cursor-pointer">
                     Keep me signed in
                   </label>
                 </div>
@@ -298,10 +301,10 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
                     name="agreeTerms"
                     checked={formData.agreeTerms}
                     onChange={handleChange}
-                    className="rounded bg-slate-950 border-slate-800 text-indigo-600 focus:ring-indigo-500"
+                    className="rounded bg-[#191919] border-[#2f2f2f] text-[#f05a67] focus:ring-[#f05a67]"
                   />
-                  <label htmlFor="agreeTerms" className="text-xs text-slate-400 cursor-pointer">
-                    I agree to the <span className="text-indigo-400 underline">Terms of Service</span> and <span className="text-indigo-400 underline">Privacy Policy</span>
+                  <label htmlFor="agreeTerms" className="text-xs text-[#999999] cursor-pointer">
+                    I agree to the <span className="text-[#f05a67] underline">Terms</span> and <span className="text-[#f05a67] underline">Privacy Policy</span>
                   </label>
                 </div>
               )}
@@ -310,7 +313,7 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3.5 mt-2 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-400 hover:to-indigo-500 text-white text-xs font-black uppercase tracking-wider transition-all disabled:opacity-50 cursor-pointer shadow-lg shadow-indigo-500/25 flex items-center justify-center gap-2"
+                className="w-full py-3.5 mt-2 rounded-xl bg-[#f05a67] hover:bg-[#d94754] text-white text-xs font-black uppercase tracking-wider transition-all disabled:opacity-50 cursor-pointer shadow-lg shadow-[#f05a67]/20 flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
@@ -327,19 +330,19 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
               {/* Divider */}
               <div className="relative my-4">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-800"></div>
+                  <div className="w-full border-t border-[#2f2f2f]"></div>
                 </div>
-                <div className="relative flex justify-center text-[10px] uppercase font-bold text-slate-500">
-                  <span className="bg-slate-900 px-2">Or Continue With</span>
+                <div className="relative flex justify-center text-[10px] uppercase font-bold text-[#666666]">
+                  <span className="bg-[#222222] px-2">Or Continue With</span>
                 </div>
               </div>
 
-              {/* Google Social Button */}
+              {/* Google Button */}
               <button
                 type="button"
                 onClick={handleGoogleSignIn}
                 disabled={isSubmitting}
-                className="w-full py-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-200 text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-3"
+                className="w-full py-3 rounded-xl bg-[#191919] border border-[#2f2f2f] hover:border-[#444444] text-white text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-3"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
                   <path
@@ -366,9 +369,8 @@ export function AuthPage({ onNavigate, onLoginSuccess }) {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-900 py-4 px-6 text-center text-[10px] text-slate-600">
-        © Storefront Inc. All rights reserved. Protected by reCAPTCHA.
+      <footer className="border-t border-[#2f2f2f] py-4 px-6 text-center text-[10px] text-[#666666]">
+        © Storefront Inc. All rights reserved.
       </footer>
     </div>
   );
