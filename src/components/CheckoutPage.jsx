@@ -4,7 +4,7 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
   const [step, setStep] = useState(1); // 1: Order Form, 2: Order Confirmation
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card'); // 'card' | 'paypal' | 'applepay'
-  const [orderReference, setOrderReference] = useState(''); // 👈 Stable Order Reference state
+  const [orderReference, setOrderReference] = useState('');
 
   // Form State
   const [formData, setFormData] = useState({
@@ -56,7 +56,6 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
     e.preventDefault();
     setIsProcessing(true);
 
-    // 🔒 Generate random reference inside Event Handler (Pure & Side-effect Safe)
     const newOrderRef = `#ORD-${Math.floor(100000 + Math.random() * 900000)}`;
 
     // Simulate Payment Gateway API Delay
@@ -69,27 +68,27 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen bg-[#191919] text-[#ffffff] flex flex-col justify-between selection:bg-[#f05a67] selection:text-white">
       
       {/* Header Bar */}
-      <header className="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
+      <header className="bg-[#222222]/80 backdrop-blur-md border-b border-[#2f2f2f] sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <button
             onClick={() => onNavigate('dashboard')}
-            className="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-indigo-400 transition-colors cursor-pointer"
+            className="flex items-center gap-2 text-xs font-bold text-[#999999] hover:text-[#f05a67] transition-colors cursor-pointer"
           >
             ← Back to Store
           </button>
 
           {/* Stepper */}
           <div className="flex items-center gap-3 text-xs font-semibold">
-            <span className="text-slate-500">Cart</span>
-            <span className="text-slate-600">›</span>
-            <span className={step === 1 ? 'text-indigo-400 font-bold underline underline-offset-4' : 'text-slate-500'}>
+            <span className="text-[#666666]">Cart</span>
+            <span className="text-[#666666]">›</span>
+            <span className={step === 1 ? 'text-[#f05a67] font-bold underline underline-offset-4' : 'text-[#666666]'}>
               Shipping & Payment
             </span>
-            <span className="text-slate-600">›</span>
-            <span className={step === 2 ? 'text-emerald-400 font-bold' : 'text-slate-500'}>
+            <span className="text-[#666666]">›</span>
+            <span className={step === 2 ? 'text-emerald-400 font-bold' : 'text-[#666666]'}>
               Confirmation
             </span>
           </div>
@@ -110,18 +109,18 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
             <div className="lg:col-span-7 space-y-6">
               
               {/* Shipping Section */}
-              <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-sm shadow-xl">
+              <div className="bg-[#222222]/60 border border-[#2f2f2f] rounded-2xl p-6 backdrop-blur-sm shadow-xl">
                 <div className="flex items-center justify-between mb-5">
-                  <h2 className="text-sm font-black uppercase tracking-wider text-indigo-400 flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs">1</span>
+                  <h2 className="text-sm font-black uppercase tracking-wider text-[#f05a67] flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-[#f05a67]/20 text-[#f05a67] flex items-center justify-center text-xs">1</span>
                     Shipping Address
                   </h2>
-                  <span className="text-xs text-slate-500">* All fields required</span>
+                  <span className="text-xs text-[#666666]">* All fields required</span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 text-xs">
                   <div className="col-span-2 sm:col-span-1">
-                    <label className="block text-slate-300 font-bold mb-1.5">Full Name</label>
+                    <label className="block text-[#999999] font-bold mb-1.5">Full Name</label>
                     <input
                       required
                       type="text"
@@ -129,12 +128,12 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                       value={formData.fullName}
                       onChange={handleChange}
                       placeholder="Alex Morgan"
-                      className="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-3 outline-none focus:border-indigo-500 transition-colors text-white placeholder-slate-600"
+                      className="w-full bg-[#191919]/80 border border-[#2f2f2f] rounded-xl p-3 outline-none focus:border-[#f05a67] transition-colors text-white placeholder-[#666666]"
                     />
                   </div>
 
                   <div className="col-span-2 sm:col-span-1">
-                    <label className="block text-slate-300 font-bold mb-1.5">Email Address</label>
+                    <label className="block text-[#999999] font-bold mb-1.5">Email Address</label>
                     <input
                       required
                       type="email"
@@ -142,12 +141,12 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="alex@example.com"
-                      className="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-3 outline-none focus:border-indigo-500 transition-colors text-white placeholder-slate-600"
+                      className="w-full bg-[#191919]/80 border border-[#2f2f2f] rounded-xl p-3 outline-none focus:border-[#f05a67] transition-colors text-white placeholder-[#666666]"
                     />
                   </div>
 
                   <div className="col-span-2">
-                    <label className="block text-slate-300 font-bold mb-1.5">Street Address</label>
+                    <label className="block text-[#999999] font-bold mb-1.5">Street Address</label>
                     <input
                       required
                       type="text"
@@ -155,12 +154,12 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                       value={formData.address}
                       onChange={handleChange}
                       placeholder="742 Evergreen Terrace"
-                      className="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-3 outline-none focus:border-indigo-500 transition-colors text-white placeholder-slate-600"
+                      className="w-full bg-[#191919]/80 border border-[#2f2f2f] rounded-xl p-3 outline-none focus:border-[#f05a67] transition-colors text-white placeholder-[#666666]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-300 font-bold mb-1.5">City</label>
+                    <label className="block text-[#999999] font-bold mb-1.5">City</label>
                     <input
                       required
                       type="text"
@@ -168,12 +167,12 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                       value={formData.city}
                       onChange={handleChange}
                       placeholder="Springfield"
-                      className="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-3 outline-none focus:border-indigo-500 transition-colors text-white placeholder-slate-600"
+                      className="w-full bg-[#191919]/80 border border-[#2f2f2f] rounded-xl p-3 outline-none focus:border-[#f05a67] transition-colors text-white placeholder-[#666666]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-300 font-bold mb-1.5">Postal Code</label>
+                    <label className="block text-[#999999] font-bold mb-1.5">Postal Code</label>
                     <input
                       required
                       type="text"
@@ -181,16 +180,16 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                       value={formData.zip}
                       onChange={handleChange}
                       placeholder="97477"
-                      className="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-3 outline-none focus:border-indigo-500 transition-colors text-white placeholder-slate-600"
+                      className="w-full bg-[#191919]/80 border border-[#2f2f2f] rounded-xl p-3 outline-none focus:border-[#f05a67] transition-colors text-white placeholder-[#666666]"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Payment Section */}
-              <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-sm shadow-xl space-y-6">
-                <h2 className="text-sm font-black uppercase tracking-wider text-indigo-400 flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs">2</span>
+              <div className="bg-[#222222]/60 border border-[#2f2f2f] rounded-2xl p-6 backdrop-blur-sm shadow-xl space-y-6">
+                <h2 className="text-sm font-black uppercase tracking-wider text-[#f05a67] flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-[#f05a67]/20 text-[#f05a67] flex items-center justify-center text-xs">2</span>
                   Payment Method
                 </h2>
 
@@ -201,8 +200,8 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                     onClick={() => setPaymentMethod('card')}
                     className={`p-3 rounded-xl border flex flex-col items-center gap-1.5 text-xs font-bold transition-all cursor-pointer ${
                       paymentMethod === 'card'
-                        ? 'border-indigo-500 bg-indigo-500/10 text-white shadow-lg shadow-indigo-500/10'
-                        : 'border-slate-800 bg-slate-950/50 text-slate-400 hover:border-slate-700'
+                        ? 'border-[#f05a67] bg-[#f05a67]/10 text-white shadow-lg shadow-[#f05a67]/10'
+                        : 'border-[#2f2f2f] bg-[#191919]/50 text-[#999999] hover:border-[#444444]'
                     }`}
                   >
                     <span className="text-lg">💳</span>
@@ -214,8 +213,8 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                     onClick={() => setPaymentMethod('paypal')}
                     className={`p-3 rounded-xl border flex flex-col items-center gap-1.5 text-xs font-bold transition-all cursor-pointer ${
                       paymentMethod === 'paypal'
-                        ? 'border-indigo-500 bg-indigo-500/10 text-white shadow-lg shadow-indigo-500/10'
-                        : 'border-slate-800 bg-slate-950/50 text-slate-400 hover:border-slate-700'
+                        ? 'border-[#f05a67] bg-[#f05a67]/10 text-white shadow-lg shadow-[#f05a67]/10'
+                        : 'border-[#2f2f2f] bg-[#191919]/50 text-[#999999] hover:border-[#444444]'
                     }`}
                   >
                     <span className="text-lg font-black italic text-blue-400">P</span>
@@ -227,8 +226,8 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                     onClick={() => setPaymentMethod('applepay')}
                     className={`p-3 rounded-xl border flex flex-col items-center gap-1.5 text-xs font-bold transition-all cursor-pointer ${
                       paymentMethod === 'applepay'
-                        ? 'border-indigo-500 bg-indigo-500/10 text-white shadow-lg shadow-indigo-500/10'
-                        : 'border-slate-800 bg-slate-950/50 text-slate-400 hover:border-slate-700'
+                        ? 'border-[#f05a67] bg-[#f05a67]/10 text-white shadow-lg shadow-[#f05a67]/10'
+                        : 'border-[#2f2f2f] bg-[#191919]/50 text-[#999999] hover:border-[#444444]'
                     }`}
                   >
                     <span className="text-lg">⚡</span>
@@ -239,9 +238,9 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                 {paymentMethod === 'card' ? (
                   <div className="space-y-6 pt-2">
                     {/* Dynamic Visual Credit Card Display */}
-                    <div className="relative w-full h-44 rounded-2xl bg-gradient-to-tr from-indigo-900 via-slate-900 to-indigo-600 p-6 border border-white/10 shadow-2xl overflow-hidden flex flex-col justify-between text-white">
-                      <div className="absolute -right-8 -bottom-8 w-36 h-36 rounded-full bg-indigo-500/20 blur-xl"></div>
-                      <div className="absolute top-0 right-12 w-24 h-24 rounded-full bg-violet-400/20 blur-lg"></div>
+                    <div className="relative w-full h-44 rounded-2xl bg-gradient-to-tr from-[#222222] via-[#191919] to-[#f05a67]/80 p-6 border border-white/10 shadow-2xl overflow-hidden flex flex-col justify-between text-white">
+                      <div className="absolute -right-8 -bottom-8 w-36 h-36 rounded-full bg-[#f05a67]/20 blur-xl"></div>
+                      <div className="absolute top-0 right-12 w-24 h-24 rounded-full bg-[#f05a67]/30 blur-lg"></div>
 
                       <div className="flex justify-between items-start z-10">
                         <div className="w-10 h-7 rounded-md bg-amber-400/80 border border-amber-300 flex items-center justify-center">
@@ -254,18 +253,18 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                       </div>
 
                       <div className="z-10 space-y-3">
-                        <div className="font-mono text-base tracking-widest text-slate-200">
+                        <div className="font-mono text-base tracking-widest text-[#ffffff]">
                           {formData.cardNumber || '•••• •••• •••• ••••'}
                         </div>
 
-                        <div className="flex justify-between text-[10px] uppercase font-bold text-slate-300 tracking-wider">
+                        <div className="flex justify-between text-[10px] uppercase font-bold text-[#999999] tracking-wider">
                           <div>
-                            <span className="block text-slate-400 text-[8px]">Cardholder</span>
-                            <span>{formData.cardName || 'YOUR NAME'}</span>
+                            <span className="block text-[#666666] text-[8px]">Cardholder</span>
+                            <span className="text-white">{formData.cardName || 'YOUR NAME'}</span>
                           </div>
                           <div>
-                            <span className="block text-slate-400 text-[8px]">Expires</span>
-                            <span>{formData.expiry || 'MM/YY'}</span>
+                            <span className="block text-[#666666] text-[8px]">Expires</span>
+                            <span className="text-white">{formData.expiry || 'MM/YY'}</span>
                           </div>
                         </div>
                       </div>
@@ -274,7 +273,7 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                     {/* Card Input Fields */}
                     <div className="grid grid-cols-2 gap-4 text-xs">
                       <div className="col-span-2">
-                        <label className="block text-slate-300 font-bold mb-1.5">Cardholder Name</label>
+                        <label className="block text-[#999999] font-bold mb-1.5">Cardholder Name</label>
                         <input
                           required
                           type="text"
@@ -282,12 +281,12 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                           value={formData.cardName}
                           onChange={handleChange}
                           placeholder="Alex Morgan"
-                          className="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-3 outline-none focus:border-indigo-500 transition-colors text-white"
+                          className="w-full bg-[#191919]/80 border border-[#2f2f2f] rounded-xl p-3 outline-none focus:border-[#f05a67] transition-colors text-white placeholder-[#666666]"
                         />
                       </div>
 
                       <div className="col-span-2">
-                        <label className="block text-slate-300 font-bold mb-1.5">Card Number</label>
+                        <label className="block text-[#999999] font-bold mb-1.5">Card Number</label>
                         <div className="relative">
                           <input
                             required
@@ -296,16 +295,16 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                             value={formData.cardNumber}
                             onChange={handleChange}
                             placeholder="4111 2222 3333 4444"
-                            className="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-3 pr-12 outline-none focus:border-indigo-500 transition-colors font-mono text-white"
+                            className="w-full bg-[#191919]/80 border border-[#2f2f2f] rounded-xl p-3 pr-12 outline-none focus:border-[#f05a67] transition-colors font-mono text-white placeholder-[#666666]"
                           />
-                          <span className="absolute right-3 top-3 text-xs font-bold text-indigo-400">
+                          <span className="absolute right-3 top-3 text-xs font-bold text-[#f05a67]">
                             {getCardBrand(formData.cardNumber)}
                           </span>
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-slate-300 font-bold mb-1.5">Expiration Date</label>
+                        <label className="block text-[#999999] font-bold mb-1.5">Expiration Date</label>
                         <input
                           required
                           type="text"
@@ -313,12 +312,12 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                           value={formData.expiry}
                           onChange={handleChange}
                           placeholder="MM/YY"
-                          className="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-3 outline-none focus:border-indigo-500 transition-colors font-mono text-white"
+                          className="w-full bg-[#191919]/80 border border-[#2f2f2f] rounded-xl p-3 outline-none focus:border-[#f05a67] transition-colors font-mono text-white placeholder-[#666666]"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-slate-300 font-bold mb-1.5">Security Code (CVV)</label>
+                        <label className="block text-[#999999] font-bold mb-1.5">Security Code (CVV)</label>
                         <input
                           required
                           type="password"
@@ -327,15 +326,15 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                           value={formData.cvv}
                           onChange={handleChange}
                           placeholder="•••"
-                          className="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-3 outline-none focus:border-indigo-500 transition-colors font-mono text-white"
+                          className="w-full bg-[#191919]/80 border border-[#2f2f2f] rounded-xl p-3 outline-none focus:border-[#f05a67] transition-colors font-mono text-white placeholder-[#666666]"
                         />
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="p-8 text-center bg-slate-950/60 rounded-xl border border-slate-800 space-y-3">
-                    <p className="text-xs text-slate-300">
-                      You will be redirected to complete your purchase securely via <strong className="text-indigo-400 uppercase">{paymentMethod}</strong>.
+                  <div className="p-8 text-center bg-[#191919]/60 rounded-xl border border-[#2f2f2f] space-y-3">
+                    <p className="text-xs text-[#999999]">
+                      You will be redirected to complete your purchase securely via <strong className="text-[#f05a67] uppercase">{paymentMethod}</strong>.
                     </p>
                   </div>
                 )}
@@ -344,27 +343,27 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
 
             {/* Right Column: Summary Panel */}
             <div className="lg:col-span-5">
-              <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 sticky top-24 shadow-2xl backdrop-blur-md space-y-6">
-                <h2 className="text-xs font-black text-white uppercase tracking-wider pb-3 border-b border-slate-800 flex justify-between items-center">
+              <div className="bg-[#222222]/80 border border-[#2f2f2f] rounded-2xl p-6 sticky top-24 shadow-2xl backdrop-blur-md space-y-6">
+                <h2 className="text-xs font-black text-white uppercase tracking-wider pb-3 border-b border-[#2f2f2f] flex justify-between items-center">
                   <span>Order Summary</span>
-                  <span className="text-indigo-400">{cartItems.reduce((a, b) => a + b.quantity, 0)} Items</span>
+                  <span className="text-[#f05a67]">{cartItems.reduce((a, b) => a + b.quantity, 0)} Items</span>
                 </h2>
 
                 <div className="max-h-60 overflow-y-auto space-y-3 pr-1">
                   {cartItems.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between text-xs gap-3 p-2 rounded-lg bg-slate-950/40 border border-slate-800/60">
+                    <div key={item.id} className="flex items-center justify-between text-xs gap-3 p-2 rounded-lg bg-[#191919]/40 border border-[#2f2f2f]/60">
                       <img src={item.image} alt={item.title} className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
                       <div className="flex-1 min-w-0">
-                        <p className="font-bold text-slate-200 truncate">{item.title}</p>
-                        <p className="text-slate-500">Qty: {item.quantity}</p>
+                        <p className="font-bold text-[#ffffff] truncate">{item.title}</p>
+                        <p className="text-[#666666]">Qty: {item.quantity}</p>
                       </div>
-                      <span className="font-bold text-indigo-400">${(item.price * item.quantity).toFixed(2)}</span>
+                      <span className="font-bold text-[#f05a67]">${(item.price * item.quantity).toFixed(2)}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="space-y-2.5 text-xs pt-3 border-t border-slate-800">
-                  <div className="flex justify-between text-slate-400">
+                <div className="space-y-2.5 text-xs pt-3 border-t border-[#2f2f2f]">
+                  <div className="flex justify-between text-[#999999]">
                     <span>Subtotal</span>
                     <span className="text-white font-medium">${subtotal.toFixed(2)}</span>
                   </div>
@@ -376,21 +375,21 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                     </div>
                   )}
 
-                  <div className="flex justify-between text-slate-400">
+                  <div className="flex justify-between text-[#999999]">
                     <span>Estimated Shipping</span>
                     <span>{shippingFee === 0 ? <strong className="text-emerald-400">FREE</strong> : `$${shippingFee.toFixed(2)}`}</span>
                   </div>
 
-                  <div className="flex justify-between text-base font-black text-white pt-3 border-t border-slate-800">
+                  <div className="flex justify-between text-base font-black text-white pt-3 border-t border-[#2f2f2f]">
                     <span>Total Amount</span>
-                    <span className="text-indigo-400">${total.toFixed(2)}</span>
+                    <span className="text-[#f05a67]">${total.toFixed(2)}</span>
                   </div>
                 </div>
 
                 <button
                   type="submit"
                   disabled={isProcessing || cartItems.length === 0}
-                  className="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-400 hover:to-indigo-500 text-white text-xs font-black uppercase tracking-wider transition-all disabled:opacity-50 cursor-pointer shadow-lg shadow-indigo-500/25 flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-xl bg-[#f05a67] hover:bg-[#d94754] text-white text-xs font-black uppercase tracking-wider transition-all disabled:opacity-50 cursor-pointer shadow-lg shadow-[#f05a67]/25 flex items-center justify-center gap-2"
                 >
                   {isProcessing ? (
                     <span className="flex items-center gap-2">
@@ -402,7 +401,7 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
                   )}
                 </button>
 
-                <div className="flex items-center justify-center gap-4 text-[10px] text-slate-500 pt-2 border-t border-slate-800/80">
+                <div className="flex items-center justify-center gap-4 text-[10px] text-[#666666] pt-2 border-t border-[#2f2f2f]/80">
                   <span>🛡️ 30-Day Money Back</span>
                   <span>•</span>
                   <span>🚚 Fast Dispatch</span>
@@ -412,24 +411,24 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
 
           </form>
         ) : (
-          /* Confirmation View with Pure State Reference */
-          <div className="max-w-md mx-auto text-center py-12 bg-slate-900/80 border border-slate-800 rounded-3xl p-8 shadow-2xl backdrop-blur-md space-y-6">
+          /* Confirmation View */
+          <div className="max-w-md mx-auto text-center py-12 bg-[#222222]/80 border border-[#2f2f2f] rounded-3xl p-8 shadow-2xl backdrop-blur-md space-y-6">
             <div className="w-20 h-20 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full flex items-center justify-center text-4xl mx-auto shadow-xl shadow-emerald-500/10 animate-bounce">
               ✓
             </div>
             <div className="space-y-2">
               <h2 className="text-2xl font-black text-white">Payment Successful!</h2>
-              <p className="text-xs text-slate-400">
-                Order confirmation and digital receipt have been sent to <strong className="text-indigo-400">{formData.email || 'your email'}</strong>.
+              <p className="text-xs text-[#999999]">
+                Order confirmation and digital receipt have been sent to <strong className="text-[#f05a67]">{formData.email || 'your email'}</strong>.
               </p>
             </div>
 
-            <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-left text-xs space-y-1">
-              <div className="flex justify-between text-slate-400">
+            <div className="p-4 bg-[#191919]/60 rounded-xl border border-[#2f2f2f] text-left text-xs space-y-1">
+              <div className="flex justify-between text-[#999999]">
                 <span>Order Reference:</span>
                 <span className="font-mono text-white font-bold">{orderReference}</span>
               </div>
-              <div className="flex justify-between text-slate-400">
+              <div className="flex justify-between text-[#999999]">
                 <span>Estimated Delivery:</span>
                 <span className="text-emerald-400 font-bold">3-5 Business Days</span>
               </div>
@@ -437,7 +436,7 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
 
             <button
               onClick={() => onNavigate('dashboard')}
-              className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all cursor-pointer shadow-lg shadow-indigo-500/20"
+              className="w-full py-3.5 bg-[#f05a67] hover:bg-[#d94754] text-white rounded-xl text-xs font-bold transition-all cursor-pointer shadow-lg shadow-[#f05a67]/20"
             >
               Return to Storefront
             </button>
@@ -445,7 +444,7 @@ export function CheckoutPage({ cartItems, appliedCoupon, onClearCart, onNavigate
         )}
       </main>
 
-      <footer className="border-t border-slate-900 py-4 px-6 text-center text-[10px] text-slate-600">
+      <footer className="border-t border-[#2f2f2f] py-4 px-6 text-center text-[10px] text-[#666666]">
         © Storefront Inc. All rights reserved. Encrypted payment processing powered by Stripe & PayPal.
       </footer>
     </div>
