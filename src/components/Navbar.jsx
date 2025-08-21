@@ -1,4 +1,3 @@
-import { ThemeToggle } from './ThemeToggle';
 
 const CATEGORIES = ['ALL', 'Keyboards', 'Mice', 'Monitors', 'Audio', 'Electronics'];
 
@@ -57,7 +56,6 @@ export function Navbar({
 
         {/* Right Actions */}
         <div className="flex items-center gap-3">
-          <ThemeToggle />
 
           <button
             onClick={onOpenCart}

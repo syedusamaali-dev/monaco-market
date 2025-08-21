@@ -1,109 +1,50 @@
 @import "tailwindcss";
 
-/* Default Fallback Light Theme */
+/* 🎨 Tailwind CSS v4 Theme Token Bindings */
+@theme {
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-border-app: var(--border-color);
+
+  --color-text-main: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+
+  --color-brand: var(--brand-primary);
+  --color-brand-hover: var(--brand-secondary);
+  --color-accent-green: var(--accent-green);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-purple: var(--accent-purple);
+
+  --shadow-card: var(--card-shadow);
+  --font-main: var(--font-main);
+}
+
+/* 🔴 Default Theme: Extracted from Screenshot */
 :root {
-  --bg-primary: #eff6ff;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #dbeafe;
-  --border-color: #bfdbfe;
+  --bg-primary: #161616;       /* Main Page Background */
+  --bg-secondary: #1f1f1f;     /* Main Cards / Containers */
+  --bg-tertiary: #191919;      /* Form Fields / Recessed Elements */
+  --border-color: #2d2d2d;     /* Section & Container Borders */
   
-  --text-primary: #1e3a8a;
-  --text-muted: #1e40af;
+  --text-primary: #ffffff;     /* Headings, Primary Text, Prices */
+  --text-muted: #8c8c8c;       /* Labels, Subtitles, Captions */
   
-  --brand-primary: #2563eb;
-  --brand-secondary: #e11d48;
-  --accent-green: #059669;
-  --accent-blue: #3b82f6;
-  --accent-purple: #7c3aed;
+  --brand-primary: #f85867;    /* Signature Coral (Buttons & Active Tabs) */
+  --brand-secondary: #e04856;  /* Hover / Active Coral */
+  --accent-green: #00e676;     /* Bright SSL Badge Green / Free Tag */
+  --accent-blue: #38bdf8;
+  --accent-purple: #c084fc;
   
-  --card-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   --font-main: system-ui, -apple-system, sans-serif;
 }
 
-/* 🟢 Palette 1: Emerald & Mint (Light) */
-html[data-theme="emerald"] {
-  --bg-primary: #f0fdf4 !important;
-  --bg-secondary: #ffffff !important;
-  --bg-tertiary: #dcfce7 !important;
-  --border-color: #bbf7d0 !important;
-  
-  --text-primary: #064e3b !important;
-  --text-muted: #166534 !important;
-  
-  --brand-primary: #059669 !important;
-  --brand-secondary: #dc2626 !important;
-  --accent-green: #10b981 !important;
-  --accent-blue: #2563eb !important;
-  --accent-purple: #7c3aed !important;
-  
-  --card-shadow: 0 4px 12px rgba(5, 150, 105, 0.08) !important;
-  --font-main: system-ui, -apple-system, sans-serif !important;
-}
-
-/* 🔵 Palette 2: Sapphire Blue & Cobalt (Light) */
-html[data-theme="sapphire"] {
-  --bg-primary: #eff6ff !important;
-  --bg-secondary: #ffffff !important;
-  --bg-tertiary: #dbeafe !important;
-  --border-color: #bfdbfe !important;
-  
-  --text-primary: #1e3a8a !important;
-  --text-muted: #1e40af !important;
-  
-  --brand-primary: #2563eb !important;
-  --brand-secondary: #e11d48 !important;
-  --accent-green: #059669 !important;
-  --accent-blue: #3b82f6 !important;
-  --accent-purple: #7c3aed !important;
-  
-  --card-shadow: 0 4px 12px rgba(37, 99, 235, 0.08) !important;
-  --font-main: system-ui, -apple-system, sans-serif !important;
-}
-
-/* 🟣 Palette 3: Electric Violet (Light) */
-html[data-theme="violet"] {
-  --bg-primary: #f5f3ff !important;
-  --bg-secondary: #ffffff !important;
-  --bg-tertiary: #ede9fe !important;
-  --border-color: #ddd6fe !important;
-  
-  --text-primary: #4c1d95 !important;
-  --text-muted: #5b21b6 !important;
-  
-  --brand-primary: #7c3aed !important;
-  --brand-secondary: #f43f5e !important;
-  --accent-green: #059669 !important;
-  --accent-blue: #2563eb !important;
-  --accent-purple: #8b5cf6 !important;
-  
-  --card-shadow: 0 4px 12px rgba(124, 58, 237, 0.08) !important;
-  --font-main: system-ui, -apple-system, sans-serif !important;
-}
-
-/* 🌙 Palette 4: Dark Slate (Dark Mode) */
-html[data-theme="dark"] {
-  --bg-primary: #0f172a !important;
-  --bg-secondary: #1e293b !important;
-  --bg-tertiary: #334155 !important;
-  --border-color: #475569 !important;
-  
-  --text-primary: #f8fafc !important;
-  --text-muted: #94a3b8 !important;
-  
-  --brand-primary: #38bdf8 !important;
-  --brand-secondary: #f43f5e !important;
-  --accent-green: #4ade80 !important;
-  --accent-blue: #60a5fa !important;
-  --accent-purple: #c084fc !important;
-  
-  --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
-  --font-main: 'Consolas', 'Fira Code', 'Courier New', monospace !important;
-}
-
+/* Global Body Rule */
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-main);
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
   margin: 0;
 }
